@@ -41,17 +41,21 @@ onEvent('DOMContentLoaded', document, function () {
 
 // Function to check if cookies exist
 function hasCookies() {
-    const requiredCookies = ['Browser', 'OperatingSystem', 'ScreenWidth', 'ScreenHeight'];
+    const cookies = document.cookie;
 
-    for (const cookieName of requiredCookies) {
-        if (getCookie(cookieName)) {
-            console.log(`Cookie ${cookieName} found.`);
-            return true;
-        }
+    if (cookies === "") {
+        console.log('No cookies found.');
+        return false;
     }
 
-    console.log('No required cookies found.');
-    return false;
+    console.log('Cookies found:');
+    const cookiePairs = cookies.split(';');
+    cookiePairs.forEach(cookiePair => {
+        const [name, value] = cookiePair.trim().split('=');
+        console.log(`${name}: ${value}`);
+    });
+
+    return true;
 }
 
 // Open the modal
